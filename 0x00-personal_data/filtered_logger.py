@@ -29,11 +29,11 @@ class RedactingFormatter(logging.Formatter):
         Return:
             formatted string
         """
-        message = super().__init__(self.FORMAT)
+        message = super(RedactingFormatter, self).format(record)
         redacted = filter_datum(self.fields, self.REDACTION,
                                 message, self.SEPARATOR)
         return redacted
-
+        
 def filter_datum(fields: List[str],
                  redaction: str, message: str, separator: str) -> str:
     """Filter sensitive data in a message.
