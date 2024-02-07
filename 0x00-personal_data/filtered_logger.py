@@ -8,7 +8,6 @@ import logging
 from typing import List
 
 
-
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
         """
@@ -33,7 +32,8 @@ class RedactingFormatter(logging.Formatter):
         redacted = filter_datum(self.fields, self.REDACTION,
                                 message, self.SEPARATOR)
         return redacted
-        
+
+
 def filter_datum(fields: List[str],
                  redaction: str, message: str, separator: str) -> str:
     """Filter sensitive data in a message.
