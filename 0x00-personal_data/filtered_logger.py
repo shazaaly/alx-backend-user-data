@@ -34,7 +34,8 @@ class RedactingFormatter(logging.Formatter):
         redacted = filter_datum(self.fields, self.REDACTION,
                                 message, self.SEPARATOR)
         return redacted
-    
+
+
 def get_logger() -> logging.Logger:
     """
     Return a logging.Logger object
