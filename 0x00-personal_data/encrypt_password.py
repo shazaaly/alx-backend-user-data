@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""
+""" script to hash passwords
 """
 
 import bcrypt
