@@ -88,6 +88,7 @@ def filter_datum(fields: List[str],
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """
+    return db connection
     """
     user = os.getenv('PERSONAL_DATA_DB_USERNAME') or "root"
     passwd = os.getenv('PERSONAL_DATA_DB_PASSWORD') or ""
