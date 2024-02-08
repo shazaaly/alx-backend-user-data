@@ -20,16 +20,13 @@ def hash_password(password: str) -> bytes:
     return salted
 
 
-def is_valid(password, hashed_password) -> bool:
-    """_summary_
-
-    Args:
-        password (_type_): _description_
-        hashed_password (bool): _description_
-
-    Returns:
-        bool: _description_
+def is_valid(hashed_password: bytes, password: str) -> bool:
     """
-
-    encoded = bcrypt.encode(password)
-    return bcrypt.checkpw(encoded, hashed_password)
+    Check whether a password is valid
+    Args:
+        hashed_password (bytes): hashed password
+        password (str): password in string
+    Return:
+        bool
+    """
+    return bcrypt.checkpw(password.encode(), hashed_password)
