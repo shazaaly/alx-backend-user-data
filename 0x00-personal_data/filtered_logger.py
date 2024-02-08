@@ -95,10 +95,10 @@ def get_db():
     Returns:
         connection: The connection object to the database.
     """
-    db_name = os.environ.get('PERSONAL_DATA_DB_NAME')
+    db_name = os.environ.get('PERSONAL_DATA_DB_NAME') or 'root'
     db_username = os.environ.get('PERSONAL_DATA_DB_USERNAME')
-    db_password = os.environ.get('PERSONAL_DATA_DB_PASSWORD')
-    db_host = os.environ.get('PERSONAL_DATA_DB_HOST')
+    db_password = os.environ.get('PERSONAL_DATA_DB_PASSWORD') or ''
+    db_host = os.environ.get('PERSONAL_DATA_DB_HOST') or 'localhost'
 
     # Create a connection to the database
     connection = mysql.connector.connect(user=db_username,
