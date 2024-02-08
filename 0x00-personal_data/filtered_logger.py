@@ -86,23 +86,15 @@ def filter_datum(fields: List[str],
     return message
 
 
-def get_db():
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """
-    Get the database connection.
-    Retrieves the necessary environment
-    variables for the database connection
-    and creates a connection to the database.
-    Returns:
-        connection: The connection object to the database.
     """
-    db_name = os.environ.get('PERSONAL_DATA_DB_NAME') or 'root'
-    db_username = os.environ.get('PERSONAL_DATA_DB_USERNAME')
-    db_password = os.environ.get('PERSONAL_DATA_DB_PASSWORD') or ''
-    db_host = os.environ.get('PERSONAL_DATA_DB_HOST') or 'localhost'
-
-    # Create a connection to the database
-    connection = mysql.connector.connect(user=db_username,
-                                         password=db_password,
-                                         host=db_host,
-                                         database=db_name)
-    return connection
+    user = os.getenv('PERSONAL_DATA_DB_USERNAME') or "root"
+    passwd = os.getenv('PERSONAL_DATA_DB_PASSWORD') or ""
+    host = os.getenv('PERSONAL_DATA_DB_HOST') or "localhost"
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
+    conn = mysql.connector.connect(user=user,
+                                   password=passwd,
+                                   host=host,
+                                   database=db_name)
+    return conn
