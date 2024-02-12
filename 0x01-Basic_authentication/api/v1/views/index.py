@@ -13,15 +13,16 @@ def status() -> str:
     """
     return jsonify({"status": "OK"})
 
-@app_views.route('/api/v1/unauthorized' ,strict_slashes=False)
-def trigger_unauthorized() -> str:
-  """For testing 401 new error handler, 
-  endpoint must raise a 401 error by using abort
 
-  Returns:
-      str: raised a 401 error by using abort 
-  """
-  abort(401)
+@app_views.route('/unauthorized', strict_slashes=False)
+def trigger_unauthorized() -> str:
+    """ For testing 401 new error handler,
+    endpoint must raise a 401 error by using abort
+    Returns:
+        str: raised a 401 error by using abort
+    """
+    abort(401)
+
 
 @app_views.route('/stats/', strict_slashes=False)
 def stats() -> str:
@@ -33,5 +34,3 @@ def stats() -> str:
     stats = {}
     stats['users'] = User.count()
     return jsonify(stats)
-
-
