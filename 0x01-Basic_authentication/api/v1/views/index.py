@@ -24,6 +24,16 @@ def trigger_unauthorized() -> str:
     abort(401)
 
 
+@app_views.route('/forbidden', strict_slashes=False)
+def trigger_forbidden() -> str:
+    """ For testing 401 new error handler,
+    endpoint must raise a 401 error by using abort
+    Returns:
+        str: raised a 401 error by using abort
+    """
+    abort(403)
+
+
 @app_views.route('/stats/', strict_slashes=False)
 def stats() -> str:
     """ GET /api/v1/stats
