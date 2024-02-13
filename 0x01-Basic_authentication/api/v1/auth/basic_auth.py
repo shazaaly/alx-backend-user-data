@@ -2,7 +2,7 @@
 """ to manage the Basic API authentication.
 """
 
-
+import base64
 from .auth import Auth
 
 
@@ -35,3 +35,17 @@ class BasicAuth(Auth):
         else:
             parts = authorization_header.split(' ')
             return parts[1]
+
+    def decode_base64_authorization_header(self,
+                                           base64_authorization_header: str) -> str:
+        """ returns the decoded value of a Base64 string
+        """
+        if base64_authorization_header is None:
+            return None
+        if not isinstance(base64_authorization_header, str):
+            return None
+        try:
+            decoded = base64.b64decode(base64_authorization_header)
+            return decoded.decode('utf-8')
+        except Exception as e:
+            return None
