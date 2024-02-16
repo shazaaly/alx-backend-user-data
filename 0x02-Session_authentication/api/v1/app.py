@@ -28,10 +28,14 @@ if AUTH_TYPE == 'basic_auth':
 
 @app.before_request
 def checker():
-    """_summary_
-
+    """Check if the request is authorized
     Returns:
-        _type_: _description_
+        None
+    Raises:
+        Unauthorized: If the request is not authorized.
+        Forbidden: If the request is 
+        authorized but the user 
+        does not have the necessary permissions.
     """
     if auth is None:
         pass
@@ -46,6 +50,7 @@ def checker():
         abort(401, description="Unauthorized")
     if auth.current_user(request) is None:
         abort(403, description="Forbidden")
+    request.current_user = auth.current_user(request)
 
 
 @app.errorhandler(404)
