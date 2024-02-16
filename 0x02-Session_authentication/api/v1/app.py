@@ -33,24 +33,26 @@ def checker():
         None
     Raises:
         Unauthorized: If the request is not authorized.
-        Forbidden: If the request is 
-        authorized but the user 
+        Forbidden: If the request is
+        authorized but the user
         does not have the necessary permissions.
     """
     if auth is None:
         pass
-    req_auth = auth.require_auth(request.path,
-                                 ['/api/v1/status/',
-                                  '/api/v1/unauthorized/',
-                                  '/api/v1/forbidden/'])
-    if req_auth is True:
-        pass
+    else:
 
-    if auth.authorization_header(request) is None:
-        abort(401, description="Unauthorized")
-    if auth.current_user(request) is None:
-        abort(403, description="Forbidden")
-    request.current_user = auth.current_user(request)
+        req_auth = auth.require_auth(request.path,
+                                     ['/api/v1/status/',
+                                      '/api/v1/unauthorized/',
+                                      '/api/v1/forbidden/'])
+        if req_auth:
+
+            if auth.authorization_header(request) is None:
+                abort(401, description="Unauthorized")
+            request.current_user = auth.current_user(request)
+
+            if auth.current_user(request) is None:
+                abort(403, description="Forbidden")
 
 
 @app.errorhandler(404)
