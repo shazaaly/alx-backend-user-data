@@ -32,36 +32,26 @@ if AUTH_TYPE == 'session_auth':
 
 
 @app.before_request
-def checker():
-    """Check if the request is authorized
-    Returns:
-        None
-    Raises:
-        Unauthorized: If the request is not authorized.
-        Forbidden: If the request is
-        authorized but the user
-        does not have the necessary permissions.
+def bef_req():
+    """
+    Filter each request before it's handled by the proper route
     """
     if auth is None:
         pass
     else:
-
-        req_auth = auth.require_auth(request.path,
-                                     ['/api/v1/status/',
-                                      '/api/v1/unauthorized/',
-                                      '/api/v1/forbidden/',
-                                      '/api/v1/auth_session/login/'
-                                      ])
-        if req_auth:
-
-            if auth.authorization_header(request) is None:
+        setattr(request, "current_user", auth.current_user(request))
+        excluded = [
+            '/api/v1/status/',
+            '/api/v1/unauthorized/',
+            '/api/v1/forbidden/',
+            '/api/v1/auth_session/login/'
+        ]
+        if auth.require_auth(request.path, excluded):
+            cookie = auth.session_cookie(request)
+            if auth.authorization_header(request) is None and cookie is None:
                 abort(401, description="Unauthorized")
-            request.current_user = auth.current_user(request)
-
             if auth.current_user(request) is None:
                 abort(403, description="Forbidden")
-            if auth.authorization_header(request) is None or  auth.session_cookie(request) is None:
-                abort(4031)
 
 
 @app.errorhandler(404)
