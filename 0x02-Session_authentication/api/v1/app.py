@@ -49,7 +49,9 @@ def checker():
         req_auth = auth.require_auth(request.path,
                                      ['/api/v1/status/',
                                       '/api/v1/unauthorized/',
-                                      '/api/v1/forbidden/'])
+                                      '/api/v1/forbidden/',
+                                      '/api/v1/auth_session/login/'
+                                      ])
         if req_auth:
 
             if auth.authorization_header(request) is None:
@@ -58,6 +60,8 @@ def checker():
 
             if auth.current_user(request) is None:
                 abort(403, description="Forbidden")
+            if auth.authorization_header(request) is None or  auth.session_cookie(request) is None:
+                abort(4031)
 
 
 @app.errorhandler(404)
