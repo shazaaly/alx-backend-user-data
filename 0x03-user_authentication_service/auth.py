@@ -6,6 +6,7 @@ script for _hash_password method
 import bcrypt
 from db import DB
 from user import User
+from sqlalchemy.orm.exc import NoResultFound
 
 
 def _hash_password(password):
@@ -36,3 +37,15 @@ class Auth:
         hashed = _hash_password(password)
         new_user = self._db.add_user(email, hashed)
         return new_user
+
+    def valid_login(self, email, password):
+        """validation credentials for login
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return False
+        if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
+            return True
+        else:
+            return False
