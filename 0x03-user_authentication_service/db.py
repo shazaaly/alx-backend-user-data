@@ -57,3 +57,18 @@ class DB:
         if not user:
             raise NoResultFound
         return user
+
+    def update_user(self, user_id, **kwargs):
+        """_summary_
+        """
+        user = self.__session.query(User).filter_by(id=user_id).first()
+        if user is None:
+            raise ValueError
+        for k, v in kwargs.items():
+            if hasattr(user, k):
+                setattr(user, k, v)
+            else:
+                raise ValueError
+        self.__session.commit()
+
+        return None
