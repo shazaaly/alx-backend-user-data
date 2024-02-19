@@ -13,6 +13,14 @@ Base = declarative_base()
 class User(Base):
     """ SQLAlchemy model representing the 'users' table.
     """
+
+    def __init__(self, email, hashed_password,
+                 session_id=None, reset_token=None):
+        self.email = email
+        self.hashed_password = hashed_password
+        self.session_id = session_id
+        self.reset_token = reset_token
+
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     email = Column(String, nullable=False)
