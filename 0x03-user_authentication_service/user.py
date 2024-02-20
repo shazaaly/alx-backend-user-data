@@ -1,32 +1,26 @@
 #!/usr/bin/env python3
 """
-create a SQLAlchemy model named User
-for a database table named users
-(by using the mapping declaration of SQLAlchemy).
+Declare a SQLAlchemy model named 'User' corresponding to a
+database table named "users"
 """
-
-from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+)
+
 Base = declarative_base()
 
 
 class User(Base):
-    """ SQLAlchemy model representing the 'users' table.
     """
+    Definition of class User
+    """
+    __tablename__ = "users"
 
-    def __init__(self, email, hashed_password,
-                 session_id=None, reset_token=None):
-        self.email = email
-        self.hashed_password = hashed_password
-        self.session_id = session_id
-        self.reset_token = reset_token
-
-    __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    email = Column(String, nullable=False)
-    hashed_password = Column(String, nullable=False)
-    session_id = Column(String, nullable=True)
-    reset_token = Column(String, nullable=True)
-
-    def __repr__(self):
-        return "<User(email='%s')>" % (self.email)
+    email = Column(String(250), nullable=False)
+    hashed_password = Column(String(250), nullable=False)
+    session_id = Column(String(250), nullable=True)
+    reset_token = Column(String(250), nullable=True)
